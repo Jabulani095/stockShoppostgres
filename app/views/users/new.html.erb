@@ -1,0 +1,19 @@
+<% @page_title = "New User" %>
+<h2>Create new User</h2>
+<%= form_for(:AdminUser, :url => {:action => 'create'}) do |f| %>
+<table summary = "Events from fields">
+<tr>
+<th>Name</th>
+<td><%= f.text_field(:First_name) %></td>
+</tr>
+<tr>
+<th>Password</th>
+<td><%= f.password_field(:password) %></td>
+</tr>
+<tr>
+<th>email</th>
+<td><%= f.text_field(:email) %></td>
+</tr>
+</table>
+<%= submit_tag("Create Account", :class => 'btn btn-primary btn-large') %>
+<% end %>

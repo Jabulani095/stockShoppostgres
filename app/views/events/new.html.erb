@@ -1,0 +1,19 @@
+<% @page_title = "New Event" %>
+<h2>Create new Event</h2>
+<%= form_for(:event, :url => {:action => 'create'}) do |f| %>
+<table summary = "Events from fields">
+<tr>
+<th>Event Name</th>
+<td><%= f.text_field(:name) %></td>
+</tr>
+<tr>
+<th>Event Location</th>
+<td><%= f.text_field(:Location) %></td>
+</tr>
+<tr>
+<th>Event Date</th>
+<td><%= f.text_field(:Date) %></td>
+</tr>
+</table>
+<%= submit_tag("Create Event", :class => 'btn btn-primary btn-large') %>
+<% end %>
