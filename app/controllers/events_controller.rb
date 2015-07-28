@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+
   def index
   @event = Event.sorted
   end
@@ -14,10 +15,10 @@ class EventsController < ApplicationController
 
   def create
    @event = Event.new(event_params)
-   
    if @event.save
-   flash[:notice] = "event created successfully"
+   load_eventId
    @username = params[:name]
+   session[:eventId] = @event.id
    redirect_to(:action => 'index', :id => @event.id, :First_name =>  @username)
    else
    render('new')
@@ -47,7 +48,10 @@ class EventsController < ApplicationController
     params.require(:event).permit(:name, :Location, :Date)
   end
   
-  def eventId_params
-  params.require(:event).permit(:userId, :eventId)
+  def load_eventId
+    @eventIds = EventsId.new({:userId => session[:user_id], :eventId => @event.id})
+   if @eventIds.save
+   flash[:notice] = "event created successfully"
+   end
   end
 end

@@ -1,4 +1,5 @@
 class DeviseController < ApplicationController
+before_action :confirm_logged_in, :except => [:login,:logout,:attemp_login]
   def login
    @user = AdminUser.new
   end
@@ -15,6 +16,8 @@ class DeviseController < ApplicationController
     end
   end
     if authorized_user
+	session[:user_id] = authorized_user.id
+	session[:username] = authorized_user.email
     flash[:notice] = "You are logged in"
     redirect_to(:action => 'index', :controller => 'Events')
     else
@@ -24,7 +27,10 @@ class DeviseController < ApplicationController
   end
   
   def logout
+  session[:user_id] = nil
+  session[:username] = nil
   flash[:notice] = "Logged out"
   redirect_to(:action => "index", :controller => 'Events')
   end
+  
 end

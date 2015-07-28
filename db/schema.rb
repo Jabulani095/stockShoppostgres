@@ -11,16 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150726192617) do
+ActiveRecord::Schema.define(version: 20150728163336) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "First_name",      limit: 25
     t.string   "email",           limit: 100, default: "", null: false
-    t.string   "username",        limit: 25
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
-    t.string   "password_digest", limit: 255
-    t.string   "role",            limit: 255
+    t.string   "username",        limit: 25
+    t.string   "password_digest"
+    t.string   "role"
   end
 
   add_index "admin_users", ["username"], name: "index_admin_users_on_username", using: :btree
@@ -36,16 +39,20 @@ ActiveRecord::Schema.define(version: 20150726192617) do
   create_table "events", force: :cascade do |t|
     t.string   "name",       limit: 80
     t.string   "Location",   limit: 80
-    t.date     "Date"
+    t.datetime "Date"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
   end
 
+  add_index "events", ["name"], name: "index_events_on_name", using: :btree
+
   create_table "events_ids", force: :cascade do |t|
-    t.integer  "userId",     limit: 4
-    t.integer  "eventId",    limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "userId"
+    t.integer  "eventId"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
+
+  add_index "events_ids", ["userId"], name: "index_events_ids_on_userId", using: :btree
 
 end
