@@ -9,15 +9,16 @@ before_action :confirm_logged_in, :except => [:login,:logout,:attemp_login]
   end
   
   def attemp_login
-  if params[:email].present? && params[:password].present?
-    found_user = AdminUser.where(:email => params[:email]).first
+   
+  if params_email.present? && params_password.present?
+    found_user = AdminUser.where(params_email).first
     if found_user
-	authorized_user = found_user.authenticate(params[:password])
+	authorized_user = found_user.authenticate(password)
     end
   end
     if authorized_user
 	session[:user_id] = authorized_user.id
-	session[:username] = authorized_user.email
+	session[:username] = authorized_user.First_name
     flash[:notice] = "You are logged in"
     redirect_to(:action => 'index', :controller => 'Events')
     else
@@ -33,4 +34,17 @@ before_action :confirm_logged_in, :except => [:login,:logout,:attemp_login]
   redirect_to(:action => "index", :controller => 'Events')
   end
   
+  private
+  
+   def params_email
+   params.require(:AdminUser).permit(:email)
+   end
+   
+   def params_password
+    params.require(:AdminUser).permit(:password)
+   end
+   
+   def password
+    AdminUser.new(params_password).password
+   end
 end

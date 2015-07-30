@@ -31,17 +31,18 @@
       }
 
     </style>
-<%= form_for(:devise, :url => {:action => 'attemp_login'}, :class =>'form-signin') do |f| %>
-<h2>Please sign in</h2>
-<table summary = "Loging in details">
+	<h2> Please sign in </h2>
+<%= form_for(:AdminUser, :url => {:action => 'attemp_login'}) do |f| %>
+<table summary = "Login from fields">
 <tr>
-<th>email </th>
-<td><%= f.text_field(:email, :class => 'input-block-level') %></td>
+<th>email</th>
+<td><%= f.text_field(:email) %></td>
 </tr>
 <tr>
 <th>Password</th>
 <td><%= f.password_field(:password) %></td>
 </tr>
+
 </table>
-<%= submit_tag("Sing in", :class => 'btn btn-primary btn-large') %>
+<%= submit_tag("Sign in", :class => 'btn btn-primary btn-large') %>
 <% end %>
